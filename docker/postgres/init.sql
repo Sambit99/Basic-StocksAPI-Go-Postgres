@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS stocks (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    price INT NOT NULL,
+    company TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
