@@ -31,3 +31,8 @@ func GetStockByID(stockId int64) Stock {
 	db.Where("ID=?", stockId).Find(&stock)
 	return stock
 }
+
+func (s *Stock) CreateStock() *Stock {
+	db.Create(s)
+	return s
+}
