@@ -19,3 +19,9 @@ func init() {
 	db = config.GetDB()
 	db.AutoMigrate(&Stock{})
 }
+
+func GetAllStocks() []Stock {
+	var stocks []Stock
+	db.Find(&stocks)
+	return stocks
+}
