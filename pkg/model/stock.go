@@ -25,3 +25,9 @@ func GetAllStocks() []Stock {
 	db.Find(&stocks)
 	return stocks
 }
+
+func GetStockByID(stockId int64) Stock {
+	var stock Stock
+	db.Where("ID=?", stockId).Find(&stock)
+	return stock
+}
