@@ -2,9 +2,12 @@ package controller
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/Sambit99/Basic-StocksAPI-Go-Postgres/pkg/model"
+	"github.com/gorilla/mux"
 )
 
 func GetAllStocks(w http.ResponseWriter, r *http.Request) {
@@ -14,4 +17,21 @@ func GetAllStocks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(stocks)
+}
+
+func GetStockByID(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	stockId := params["stockId"]
+	ID, err := strconv.ParseInt(stockId, 0, 0)
+	if err != nil {
+		log.Fatal("Error while parsing stock id")
+	}
+
+	stock := model.GetStockByID(ID)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(stock)
+
 }
