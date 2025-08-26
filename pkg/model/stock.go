@@ -6,7 +6,7 @@ import (
 )
 
 type Stock struct {
-	*gorm.Model
+	gorm.Model
 	Name    string  `json:"name"`
 	Price   float64 `gorm:"type:numeric(10,2)" json:"price"`
 	Company string  `json:"company"`
@@ -35,4 +35,10 @@ func GetStockByID(stockId int64) Stock {
 func (s *Stock) CreateStock() *Stock {
 	db.Create(s)
 	return s
+}
+
+func DeleteStock(stockId int64) Stock {
+	var stock Stock
+	db.Where("ID=?", stockId).Delete(&stock)
+	return stock
 }
