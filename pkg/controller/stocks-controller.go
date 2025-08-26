@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -47,4 +48,23 @@ func CreateStock(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(s)
+}
+
+func DeleteStock(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	stockId := params["stockId"]
+
+	fmt.Println(stockId)
+
+	ID, err := strconv.ParseInt(stockId, 0, 0)
+	if err != nil {
+		log.Fatal("Error while parsing stock id")
+	}
+
+	stock := model.DeleteStock(ID)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(stock)
 }
