@@ -42,3 +42,23 @@ func DeleteStock(stockId int64) Stock {
 	db.Where("ID=?", stockId).Delete(&stock)
 	return stock
 }
+
+func UpdateStock(updatedStock Stock) Stock {
+
+	var existingStock Stock
+	db.Where("ID=?", updatedStock.ID).Find(&existingStock)
+
+	if updatedStock.Name != "" {
+		existingStock.Name = updatedStock.Name
+	}
+	if updatedStock.Price != 0 {
+		existingStock.Price = updatedStock.Price
+	}
+	if updatedStock.Company != "" {
+		existingStock.Company = updatedStock.Company
+	}
+
+	db.Save(&existingStock)
+
+	return existingStock
+}
