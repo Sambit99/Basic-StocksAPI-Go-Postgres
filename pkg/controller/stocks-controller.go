@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/Sambit99/Basic-StocksAPI-Go-Postgres/pkg/model"
+	"github.com/Sambit99/Basic-StocksAPI-Go-Postgres/pkg/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -34,4 +35,16 @@ func GetStockByID(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(stock)
 
+}
+
+func CreateStock(w http.ResponseWriter, r *http.Request) {
+	stock := &model.Stock{}
+
+	utils.ParseBody(r, stock)
+
+	s := stock.CreateStock()
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(s)
 }
