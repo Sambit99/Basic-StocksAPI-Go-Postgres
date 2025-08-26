@@ -68,3 +68,26 @@ func DeleteStock(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(stock)
 }
+
+func UpdateStock(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+
+	stockId := params["stockId"]
+
+	ID, err := strconv.ParseInt(stockId, 0, 0)
+
+	if err != nil {
+		log.Fatal("Error while parsing stock id")
+	}
+
+	var stock model.Stock
+
+	utils.ParseBody(r, &stock)
+	stock.ID = uint(ID)
+
+	s := model.UpdateStock(stock)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(s)
+}
